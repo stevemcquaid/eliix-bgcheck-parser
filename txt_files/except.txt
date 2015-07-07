@@ -1,0 +1,158 @@
+
+Current Vehicle Information (None Found)
+
+Past Vehicle Information (6 Found)
+
+2003 PONTIAC - Series: BASE - Model: AZTEK
+VIN: 87DFASGGF5GFDS569
+Body Style: SUV - Vehicle Type: Truck
+Weight: 3779 lbs - Length: 182.1"
+Most Current Tag #: PA SJC5555 Valid from: (11/05/8888 to 03/10/8889)
+Doors: 4
+MSRP: $55,555
+Plant: RAMOZ ARIZPE, MEXICO
+Restraint Type: DRIVER AND PASSENGER FRONT AND FRONT SIDE AIRBAGS, ACTIVE BELTS
+Gross Vehicle Weight Range: 5001-6000
+Height: 66.7
+Width: 73.7
+Wheel Base: 108.3
+Wheel Dimensions: 16.0
+Drive Type: FWD
+Fuel: GAS 18 Gallon
+Engine: 3.4L V6 NATURALLY ASPIRATED
+Transmission: 4 Speed AUTOMATIC
+
+Most Current Owner/Registrant/Lien Information - 11/05/8888 to 03/10/8889
+Title Holders
+JOSEPH C JONES
+5555 W 10TH ST,  PITTSBURGH, PA 15289-5555 (ALLEGHENY COUNTY)
+DOB: 03/5555
+Title Number: 55555555555
+State Titled In: OH
+Original Title Date: 10/29/8888
+Title Transfer Date: 10/29/8888
+
+Lien Holders
+EMERALD GROUP CU
+
+Lessors
+None Found
+
+Registrant
+ROBERT C JONES
+Registered: 11/05/8888 to 03/10/8889
+DOB: 03/5555
+
+Addresses Registered to While owned by JONES C JONES
+5555 W 10TH ST,  PITTSBURGH, PA 15289-5555 (ALLEGHENY COUNTY) (11/05/8888 to 03/07/2015)
+
+Vehicle Tag History
+License Plate: PA SJC5555 Valid from: (11/05/8888 to 03/10/8889)
+
+Previous Owner/Registrant/Lien Information - 12/14/6666 to 12/18/8888
+Title Holders
+FERNANDO F AKIN
+5548 CHIPPEWA RD,  PITTSBURGH, PA 15289-5555 (ALLEGHENY COUNTY)
+Title Number: 555555555555
+State Titled In: OH
+Original Title Date: 10/23/8888
+Title Transfer Date: 10/23/8888
+
+Lien Holders
+WELLSFARGO BANK
+
+Lessors
+None Found
+
+Registrant
+FERNANDO F AKIN
+Registered: 12/14/6666 to 12/18/8888
+
+Addresses Registered to While owned by FERNANDO F AKIN
+5555 STEELTOWN RD,  PITTSBURGH, PA 15289-5555 (ALLEGHENY COUNTY) (12/14/6666 to 12/03/7777)
+
+Vehicle Tag History
+License Plate: PA SJC6666 Valid from: (12/14/6666 to 12/18/8888)
+
+Previous Owner/Registrant/Lien Information
+Title Holders
+ED SCHMIDT CHEVROLET
+1425 REYNOLDS RD,  PITTSBURGH, PA 43537-5555 (ALLEGHENY COUNTY)
+Title Number: 555555555
+State Titled In: PA
+Original Title Date: 12/27/5555
+Title Transfer Date: 12/27/5555
+
+Lien Holders
+None Found
+
+Lessors
+None Found
+
+Registrant
+None Found
+
+Previous Owner/Registrant/Lien Information - 09/02/2003 to 07/18/2005
+Title Holders
+SHERLIE JONES
+5555 CRESTVIEW ST,  PITTSBURGH, PA 15289-5555 (ALLEGHENY COUNTY)
+DOB: 07/1949
+Title Number: 55555555
+State Titled In: PA
+Original Title Date: 08/21/3333
+Title Transfer Date: 08/21/3333
+
+Lien Holders
+None Found
+
+Lessors
+None Found
+
+Registrant
+SHERLIE JONES
+Registered: 09/02/3333 to 07/18/5555
+DOB: 07/44444
+
+Addresses Registered to While owned by SHERLIE JONES
+555 OCEANVIEW ST,  PITTSBURGH, OH 15289-5555 (ALLEGHENY COUNTY) (09/02/3333 to 05/27/44444)
+
+Vehicle Tag History
+License Plate: PA SJC5555 Valid from: (09/02/5555 to 07/18/5555)
+
+2001 VOLKSWAGEN - Series: GLS - Model: NEW BEETLE
+VIN: 87DFASGGF45GFDS569
+Body Style: COUPE 2 Door 4P - Vehicle Type: Passenger Car
+Weight: 2783 lbs - Length: 161.1"
+Most Current Tag #: NC CFZ9244 Valid from: (05/14/2014 to 05/31/2015)
+Doors: 2
+MSRP: $17,400
+Plant: PUEBLA, MEXICO
+Restraint Type: DRIVER AND PASSENGER FRONT AND FRONT SIDE AIRBAGS, ACTIVE BELTS
+Height: 59
+Width: 67.9
+Wheel Base: 98.7
+Wheel Dimensions: 16.0
+Drive Type: FWD
+Fuel: GAS 14 Gallon
+Engine: 2.0L INLINE4 NATURALLY ASPIRATED
+
+Most Current Owner/Registrant/Lien Information
+Title Holders
+MIKE MARIE DANGNAGHT
+555 FERN LN,  PITTSBURGH, PA 15289-5555 (ALLEGHENY COUNTY)
+Title Number: 775506141349075
+State Titled In: NC
+Original Title Date: 05/14/2014
+Title Transfer Date: 05/14/2014
+
+Lien Holders
+None Found
+
+Lessors
+None Found
+
+Registrant
+AMY MARIE DANGNAGHT
+
+Addresses Registered to While owned by MIKE MARIE DANGNAGHT
+555 FERN LN,  PITTSBURGH, PA 15289-5555 (ALLEGHENY COUNTY)
