@@ -9,7 +9,7 @@ This is a PHP file to parse background checks for Insider Trading compliance.
 
 Current Version
 ----------
-1.0.0
+1.0.2
 
 Installation
 ----------
