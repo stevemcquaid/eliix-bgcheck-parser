@@ -44,7 +44,7 @@
         </div>
     </form>
   </div>
-  <div class="col-sm-4">
+  <div class="col-sm-4 pull-left">
     <a href="#" class="btn btn-default" id="pdfdownload">Download PDF</a>
   </div>  
 <body>
