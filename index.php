@@ -1,41 +1,57 @@
 <!DOCTYPE html>
 <html lang="en">
 	<head>
-  		<meta charset="utf-8">
-		<meta name="viewport" content="width=device-width, initial-scale=1.0">
-		<meta name="description" content="">
-		<meta name="author" content="">
-<script src="https://ajax.googleapis.com/ajax/libs/jquery/2.1.3/jquery.min.js"></script>
-<script type="text/javascript" src="js/jspdf.min.js"></script>
-<script type="text/javascript" src="js/html2canvas.js"></script>
+  <!--Jeremy Lee 2015 -->
+  <meta charset="utf-8">
+  <!-- Latest compiled and minified CSS -->
+  <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.5/css/bootstrap.min.css">
+  <!-- Optional theme -->
+  <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.5/css/bootstrap-theme.min.css">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <meta name="description" content="">
+  <meta name="author" content="">
+  <script src="https://ajax.googleapis.com/ajax/libs/jquery/2.1.3/jquery.min.js"></script>
+  <script type="text/javascript" src="js/jspdf.min.js"></script>
+  <script type="text/javascript" src="js/html2canvas.js"></script>
 
-<script>
-$(document).ready(function() {
+  <script>
+  $(document).ready(function() {
 
 
-var pdf = new jsPDF('p','pt','a4');
+  var pdf = new jsPDF('p','pt','a4');
 
-pdf.addHTML(document.body,function() {
-	var string = pdf.output('datauristring');
-	$('#pdfdownload').attr('href', string);
-});
+  pdf.addHTML(document.body,function() {
+    var string = pdf.output('datauristring');
+    $('#pdfdownload').attr('href', string);
+  });
 
-});
-</script>
+  });
+  </script>
 </head>
-<a href="#" id="pdfdownload">Download PDF</a>
-<!--Jeremy Lee 2015 -->
-
-<form action="index.php" method="post" enctype="multipart/form-data">
-    Select file to upload:
-    <input type="file" name="file" id="file">
-    <input type="submit" value="Upload" name="submit">
-</form>
+<div class="container">
+<div class="row">
+  <br />
+  <div class="col-sm-6 pull-left">
+    <form action="index.php" method="post" enctype="multipart/form-data">
+        <div class="row">
+          <p class="pull-left">Select file to upload:</p>
+          <input class="pull-left" type="file" name="file" id="file">
+        </div>
+        <div class="row">
+          <input class="pull-left" type="submit" value="Upload" name="submit">
+        </div>
+    </form>
+  </div>
+  <div class="col-sm-4">
+    <a href="#" class="btn btn-default"id="pdfdownload">Download PDF</a>
+  </div>  
 <body>
-<div id="container">
+
+  <div class="row">
+    <div class="col-sm-10">
 <?php 
 if (isset($_FILES["file"]["tmp_name"])){
-	echo '<h1>Background Report</h1>';
+	echo '<div class="page-header"><h1>Background Report</h1></div>';
 	$names = array();
 	$no_record = array();
   //the array formatting is as follows
@@ -67,12 +83,15 @@ if (isset($_FILES["file"]["tmp_name"])){
 	array_shift($rows);
   
 	function printWatchList($data, $value, $rows, $line){
+    echo '<div class="panel-heading">';
     if (isset($value[3])){ 
       echo '<p style="color:',$value[3], ';">';
     }else{
       echo '<p>';
     }
+
     echo '<u><b>' . $value[0] . '</u></b><br />';
+    echo '</div><div class="panel-body">';
     $iterations =  20;
     for ($i = 1; $i <= $iterations; $i++) {
       if ($rows[$line + $i] == "Global Watch Lists Match:"){
@@ -82,13 +101,15 @@ if (isset($_FILES["file"]["tmp_name"])){
       }
     }
       echo '<br />';    
-    echo '</p>';      
+    echo '</p></div>';      
 	}  
   
   function printCriminal($data, $value, $rows, $line){
+    echo '<div class="panel-heading">';    
     $found = explode("(", $data);
     $iterations = intval($found[1][0]) * 30;
     echo '<b><u>Criminal Convictions reported</u></b><br />';
+    echo '</div><div class="panel-body">';    
     echo 'Following cases reported<br />';
     for ($i = 1; $i <= $iterations; $i++) {       
       if (strpos($rows[intval($line) + $i], 'Name') == 1){
@@ -104,13 +125,15 @@ if (isset($_FILES["file"]["tmp_name"])){
         echo substr($rows[intval($line) + $i], 21) . '<br />';
       }         
     }
-
+  echo '</div>';  
   }
   
   function printUCC($data, $value, $rows, $line){
+    echo '<div class="panel-heading">';       
     $found = explode("(", $data);
     $iterations = intval($found[1][0]) * 25;
     echo '<b><u>UCC Filings</u></b><br />';
+    echo '</div><div class="panel-body">';        
     for ($i = 1; $i <= $iterations; $i++) {       
       if (strpos($rows[intval($line) + $i], 'Debtor') !== false){
         echo 'Debtor - ' . explode(':', $rows[intval($line) + $i + 1])[1] . '<br />';
@@ -125,9 +148,11 @@ if (isset($_FILES["file"]["tmp_name"])){
         echo "Expiration Date - " . explode(':', $rows[intval($line) + $i])[1] . '<br />';
       }         
     }     
+  echo '</div>';      
   }     
   
 	function printJudgments($data, $value, $rows, $line){
+    echo '<div class="panel-heading">';       
 	$judgmentLine = 0;
 	foreach($rows as $row => $data){
     $judgmentLine++;
@@ -136,6 +161,7 @@ if (isset($_FILES["file"]["tmp_name"])){
       $found = explode("(", $data);
         $iterations = intval($found[1][0]) * 30;
         echo '<b><u>Judgments Reported</u></b><br />';
+        echo '</div><div class="panel-body">';           
         for ($i = 1; $i <= $iterations; $i++) {       
           if (strpos($rows[intval($judgmentLine) + $i], 'Court Case Number') !== false){
             echo 'Case number' . explode(':', $rows[intval($judgmentLine) + $i])[1] . '<br />';
@@ -152,12 +178,15 @@ if (isset($_FILES["file"]["tmp_name"])){
         }  
       }
     }
+  echo '</div>';      
 	}
   
   function printBankruptcies($data, $value, $rows, $line){
+    echo '<div class="panel-heading">';       
     $found = explode("(", $data);
     $iterations = intval($found[1][0]) * 30;
     echo '<b><u>Bankruptcies reported</u></b><br />';
+    echo '</div><div class="panel-body">';      
     for ($i = 1; $i <= $iterations; $i++) {       
       if (strpos($rows[intval($line) + $i], 'Name') !== false){
         echo explode(':', $rows[intval($line) + $i])[1] . '<br />';
@@ -175,11 +204,14 @@ if (isset($_FILES["file"]["tmp_name"])){
         echo "Closed - " . explode(':', $rows[intval($line) + $i])[1] . '<br />';
       }         
     }     
+  echo '</div>';          
   }   
 
   function printProfessionalLicenses($data, $value, $rows, $line){
+    echo '<div class="panel-heading">';      
     $found = explode("(", $data);
     echo '<b><u>Professional licenses reported</u></b><br />';
+    echo '</div><div class="panel-body">';        
     echo 'Subject has the following reported professional licenses<br />';
     $iterations = intval($found[1][0]) * 30;
     for ($i = 1; $i <= $iterations; $i++) {      
@@ -198,14 +230,17 @@ if (isset($_FILES["file"]["tmp_name"])){
       if (strpos($rows[intval($line) + $i], 'License Status') !== false){
         echo "License status - " . explode(':', $rows[intval($line) + $i])[1] . '<br />';
       }          
-    }     
+    }    
+  echo '</div>';         
   } 
   
   function printProperties($data, $value, $rows, $line){
+    echo '<div class="panel-heading">';     
     $found = explode("(", $data);
     echo '<u><b>' . $value[0] . '</u></b><br />';    
     $iterations = intval($found[1][0]) * 23;
     echo 'Subject listed as owning following property<br />';
+    echo '</div><div class="panel-body">';            
     for ($i = 1; $i <= $iterations; $i++) {   
       if (strpos($rows[intval($line) + $i], 'Mailing Address') !== false){
         echo explode(':', $rows[intval($line) + $i])[1] . '<br />';
@@ -230,10 +265,13 @@ if (isset($_FILES["file"]["tmp_name"])){
         }
       }   
     }     
+  echo '</div>';         
   }  
   
   function printDL($data, $value, $rows, $line){
+    echo '<div class="panel-heading">';        
     echo '<b><u>DL </u></b>';
+    echo '</div><div class="panel-body">';      
     for ($i = 1; $i <= 10; $i++) {
       if (strpos($rows[intval($line) + $i], 'DL Number') !== false){
         echo 'DL# ' . str_replace('Issuing State', '', explode(":", $rows[intval($line) + $i])[1]) . '<br />';
@@ -244,10 +282,13 @@ if (isset($_FILES["file"]["tmp_name"])){
         echo 'Date of Birth' . explode(',', explode(':', $rows[intval($line) + $i])[1])[0] . '<br />';
       }
     }     
+  echo '</div>';         
   }
   
 	function printBusinessAffiliation($data, $value, $rows, $line){
+    echo '<div class="panel-heading">';      
     echo '<b><u>Possible Business Affiliations</u></b><br />';
+    echo '</div><div class="panel-body">'; 
     echo 'Subject reported to be affiliated with<br />';
     echo explode("(", $rows[intval($line) + 2])[0] . ', ';
     for ($i = 1; $i <= 10; $i++) {
@@ -255,12 +296,15 @@ if (isset($_FILES["file"]["tmp_name"])){
         echo explode("(", $rows[intval($line) + $i + 1])[0] . '<br />';
       }
     }  
+  echo '</div>';       
 	}
 
 	function printVehicles($data, $value, $rows, $line){
+    echo '<div class="panel-heading">';     
     $vehicleArray = array();
     $found = explode("(", $data);
-    echo '<b><u>' . $value[0] . '</u></b><br />';    
+    echo '<b><u>' . $value[0] . '</u></b><br />';   
+    echo '</div><div class="panel-body">'; 
     $vehicleLines = 100;
     $iterations = intval($found[1][0]) * $vehicleLines;
     for ($i = 1; $i <= $iterations; $i++) {
@@ -288,11 +332,14 @@ if (isset($_FILES["file"]["tmp_name"])){
         }
       }
     }
+  echo '</div>';     
 	}
 
 	function printMultiline($data, $value, $rows, $line){
+    echo '<div class="panel-heading">';  
     $found = explode("(", $data);
     echo '<u><b>' . $value[0] . '</u></b><br />';
+    echo '</div><div class="panel-body">'; 
     $iterations = intval($found[1][0]) * intval($value[1][1] . $value[1][2]);
     for ($i = 1; $i <= $iterations; $i++) {
       $str = explode("(", $rows[$i + $line]);
@@ -306,19 +353,24 @@ if (isset($_FILES["file"]["tmp_name"])){
       }
       echo '<br />';   
     }
+  echo '</div>';       
 	}
 
 	function printColon($data, $value){
+    echo '<div class="panel-heading">';      
     $found = explode(":", $data);
     if (count($value) == 2 && is_int($value[1])){
       echo '<u><b>' . $value[0] . '</u></b>  ' . substr(trim($found[1]), 0, $value[1]) . '<br />';
     }else{
       echo '<u><b>' . $value[0] . '</u></b>' . $found[1] . '<br />';
     }  
+    echo '</div>'; 
 	}
 
 	function printName($rows, $names){
     $maxline = 0;
+  echo '<div class="panel panel-default">';    
+    echo '<div class="panel-heading">';  
     foreach($rows as $row => $data){
       $maxline++;
       if(strpos($data, "Name") === 0 ){
@@ -328,8 +380,10 @@ if (isset($_FILES["file"]["tmp_name"])){
         break;
       }
     }
+    
     $map_names = array_map('strlen', $names);
     echo $names[array_search(min($map_names), $map_names)] . " [" . $names[array_search(max($map_names), $map_names)] . "]<br />";
+    echo '</div></div>';     
     }
     
     // main function
@@ -343,7 +397,7 @@ if (isset($_FILES["file"]["tmp_name"])){
           array_push($no_record, $value[0]);
           }else{
             //checks for flags
-            echo '<br />';
+            echo '<div class="panel panel-default">';
             if (strpos($data,':') !== false && count($value) <= 2){
               printColon($data, $value);
             }elseif($value[1][0] == "m" && strpos($data,'(') !== false){
@@ -355,6 +409,7 @@ if (isset($_FILES["file"]["tmp_name"])){
               echo $data;
               echo '<br />';   
             }
+            echo "</div>";
           }
         break;
         }
@@ -362,12 +417,18 @@ if (isset($_FILES["file"]["tmp_name"])){
 	}
   //prints values that did not contain any information
 	$no_record_clean = array_unique($no_record);
+  echo '<div class="panel panel-default">';
+  echo '<div class="panel-heading">';  
 	echo '<br /><b><u> Other areas checked with no records found</b></u><br />';
+  echo '</div><div class="panel-body">';   
 	foreach ($no_record_clean as $value){
-	echo $value . '<br />';
+    echo $value . '<br />';
 	}
+  echo '</div></div>';
 }
 ?>
+</div>
+</div>
 </div>
 </body>
 </html>
