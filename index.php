@@ -1,19 +1,47 @@
+<!DOCTYPE html>
+<html lang="en">
+	<head>
+  		<meta charset="utf-8">
+		<meta name="viewport" content="width=device-width, initial-scale=1.0">
+		<meta name="description" content="">
+		<meta name="author" content="">
+<script src="https://ajax.googleapis.com/ajax/libs/jquery/2.1.3/jquery.min.js"></script>
+<script type="text/javascript" src="js/jspdf.min.js"></script>
+<script type="text/javascript" src="js/html2canvas.js"></script>
+
+<script>
+$(document).ready(function() {
+
+
+var pdf = new jsPDF('p','pt','a4');
+
+pdf.addHTML(document.body,function() {
+	var string = pdf.output('datauristring');
+	$('#pdfdownload').attr('href', string);
+});
+
+});
+</script>
+</head>
+<a href="#" id="pdfdownload">Download PDF</a>
+<!--Jeremy Lee 2015 -->
+
 <form action="index.php" method="post" enctype="multipart/form-data">
     Select file to upload:
     <input type="file" name="file" id="file">
     <input type="submit" value="Upload" name="submit">
 </form>
-
-
-<?php
+<body>
+<div id="container">
+<?php 
 if (isset($_FILES["file"]["tmp_name"])){
 	echo '<h1>Background Report</h1>';
 	$names = array();
 	$no_record = array();
   //the array formatting is as follows
-  //[name of title in txt file] => array([name wanted in html file],
+  //[name of title in txt file] => array([name wanted in html file], 
   //[either length after colon or flag (m for multiline with ## for number of lines) or (f for function)], [name of function])
-	$values_map = array("Date of Birth" => array("DOB", 10),
+	$values_map = array("Date of Birth" => array("DOB", 10), 
                       "SSN" => array("SS", 12),
                       "Driver's License Information" => array("DL", "f", "printDL"),
                       "Address Summary" => array("Prior addresses reported", "m01"),
@@ -22,8 +50,9 @@ if (isset($_FILES["file"]["tmp_name"])){
                       "Professional Licenses" => array("Professional licenses reported", "f", "printProfessionalLicenses"),
                       "Bankruptcy Records" => array("Bankruptcies reported", "f", "printBankruptcies"),
                       "Judgments" => array("Judgements reported", "f", "printJudgments"),
-                      "Possible Criminal Records" => array("Criminal convictions reported", "f", "printCriminal"),
-                      "US Business Affiliations" => array("Possible Business Affiliations", "f", "printBusinessAffiliation"),
+                      "Possible Criminal Records" => array("Criminal convictions reported", "f", "printCriminal"), 
+                      "Global Watch Lists Match" => array("Global Watch Lists Match", "f", "printWatchList", "red"),
+                      "US Business Affiliations" => array("Possible Business Affiliations", "f", "printBusinessAffiliation"), 
                       "UCC Filings" => array("UCC Filings", "f", "printUCC"),
                       "Sexual Offences" => array("Sexual Offences"),
                       "Weapons Permits" => array("Concealed Weapons permits"),
@@ -36,48 +65,68 @@ if (isset($_FILES["file"]["tmp_name"])){
 	$txt_file = file_get_contents($_FILES["file"]["tmp_name"]);
 	$rows = explode("\n", $txt_file);
 	array_shift($rows);
-
+  
+	function printWatchList($data, $value, $rows, $line){
+    if (isset($value[3])){ 
+      echo '<p style="color:',$value[3], ';">';
+    }else{
+      echo '<p>';
+    }
+    echo '<u><b>' . $value[0] . '</u></b><br />';
+    $iterations =  20;
+    for ($i = 1; $i <= $iterations; $i++) {
+      if ($rows[$line + $i] == "Global Watch Lists Match:"){
+        echo $rows[$line + $i + 2];
+        echo '<br />';
+        echo $rows[$line + $i + 3];
+      }
+    }
+      echo '<br />';    
+    echo '</p>';      
+	}  
+  
   function printCriminal($data, $value, $rows, $line){
     $found = explode("(", $data);
     $iterations = intval($found[1][0]) * 30;
     echo '<b><u>Criminal Convictions reported</u></b><br />';
     echo 'Following cases reported<br />';
-    for ($i = 1; $i <= $iterations; $i++) {
+    for ($i = 1; $i <= $iterations; $i++) {       
       if (strpos($rows[intval($line) + $i], 'Name') == 1){
         echo explode(':', $rows[intval($line) + $i])[1] . '<br />';
-      }
+      }     
       if (strpos($rows[intval($line) + $i], 'Crime Details') !== false){
         echo explode('-', $rows[intval($line) + $i ])[1] . '<br />';
-      }
+      }   
       if (strpos($rows[intval($line) + $i], 'Case Number') !== false){
         echo "Case Number - " . explode(':', $rows[intval($line) + $i])[1] . '<br />';
-      }
+      }         
       if (strpos($rows[intval($line) + $i], 'OffenseDescription1') !== false){
         echo substr($rows[intval($line) + $i], 21) . '<br />';
-      }
+      }         
     }
-  }
 
+  }
+  
   function printUCC($data, $value, $rows, $line){
     $found = explode("(", $data);
     $iterations = intval($found[1][0]) * 25;
     echo '<b><u>UCC Filings</u></b><br />';
-    for ($i = 1; $i <= $iterations; $i++) {
+    for ($i = 1; $i <= $iterations; $i++) {       
       if (strpos($rows[intval($line) + $i], 'Debtor') !== false){
         echo 'Debtor - ' . explode(':', $rows[intval($line) + $i + 1])[1] . '<br />';
-      }
+      }     
       if (strpos($rows[intval($line) + $i], 'Secured Party') !== false){
         echo "Secured Party - " . explode(':', $rows[intval($line) + $i + 1])[1] . '<br />';
-      }
+      }   
       if (strpos($rows[intval($line) + $i], 'Filing Number') !== false){
         echo "Filing Number - " . explode(':', $rows[intval($line) + $i])[1] . '<br />';
-      }
+      }         
       if (strpos($rows[intval($line) + $i], 'Expiration Date') !== false){
         echo "Expiration Date - " . explode(':', $rows[intval($line) + $i])[1] . '<br />';
-      }
-    }
-  }
-
+      }         
+    }     
+  }     
+  
 	function printJudgments($data, $value, $rows, $line){
 	$judgmentLine = 0;
 	foreach($rows as $row => $data){
@@ -87,54 +136,53 @@ if (isset($_FILES["file"]["tmp_name"])){
       $found = explode("(", $data);
         $iterations = intval($found[1][0]) * 30;
         echo '<b><u>Judgments Reported</u></b><br />';
-        for ($i = 1; $i <= $iterations; $i++) {
+        for ($i = 1; $i <= $iterations; $i++) {       
           if (strpos($rows[intval($judgmentLine) + $i], 'Court Case Number') !== false){
             echo 'Case number' . explode(':', $rows[intval($judgmentLine) + $i])[1] . '<br />';
           }
           if (strpos($rows[intval($judgmentLine) + $i], 'Filing County') !== false){
             echo 'Filed - ' . explode(':', $rows[intval($judgmentLine) + $i])[1] . '<br />';
-          }
+          }     
           if (strpos($rows[intval($judgmentLine) + $i], 'Total Judgment Amount') !== false){
             echo "Judgment Amount - " . explode(':', $rows[intval($judgmentLine) + $i])[1] . '<br />';
-          }
+          }   
           if (strpos($rows[intval($judgmentLine) + $i], 'Plaintiff') !== false){
             echo "Plaintiff - " . explode(':', $rows[intval($judgmentLine) + $i])[1] . '<br />';
-          }
-        }
+          }               
+        }  
       }
     }
 	}
-
+  
   function printBankruptcies($data, $value, $rows, $line){
     $found = explode("(", $data);
     $iterations = intval($found[1][0]) * 30;
     echo '<b><u>Bankruptcies reported</u></b><br />';
-    for ($i = 1; $i <= $iterations; $i++) {
+    for ($i = 1; $i <= $iterations; $i++) {       
       if (strpos($rows[intval($line) + $i], 'Name') !== false){
         echo explode(':', $rows[intval($line) + $i])[1] . '<br />';
       }
       if (strpos($rows[intval($line) + $i], 'Chapter') !== false){
         echo 'Chapter ' . explode(':', $rows[intval($line) + $i])[1] . ' Bankruptcy' . '<br />';
-      }
+      }     
       if (strpos($rows[intval($line) + $i], 'Court District') !== false){
         echo "Court - " . explode(':', $rows[intval($line) + $i])[1] . '<br />';
-      }
+      }   
       if (strpos($rows[intval($line) + $i], 'Case Number') !== false){
         echo "Case Number - " . explode(':', $rows[intval($line) + $i])[1] . '<br />';
-      }
+      }         
       if (strpos($rows[intval($line) + $i], 'Closed Date') !== false){
         echo "Closed - " . explode(':', $rows[intval($line) + $i])[1] . '<br />';
-      }
-    }
-  }
+      }         
+    }     
+  }   
 
   function printProfessionalLicenses($data, $value, $rows, $line){
     $found = explode("(", $data);
     echo '<b><u>Professional licenses reported</u></b><br />';
     echo 'Subject has the following reported professional licenses<br />';
     $iterations = intval($found[1][0]) * 30;
-    echo '<b><u>Bankruptcies reported</u></b><br />';
-    for ($i = 1; $i <= $iterations; $i++) {
+    for ($i = 1; $i <= $iterations; $i++) {      
       if (strpos($rows[intval($line) + $i], 'Phone') !== false){
         echo $rows[intval($line) + $i - 2] . '<br />';
       }
@@ -143,34 +191,47 @@ if (isset($_FILES["file"]["tmp_name"])){
       }
       if (strpos($rows[intval($line) + $i], 'License State') !== false){
         echo "License State - " . explode(':', $rows[intval($line) + $i])[1] . '<br />';
-      }
+      }     
       if (strpos($rows[intval($line) + $i], 'License Number') !== false){
         echo "License Number - " . explode(':', $rows[intval($line) + $i])[1] . '<br />';
-      }
+      }   
       if (strpos($rows[intval($line) + $i], 'License Status') !== false){
         echo "License status - " . explode(':', $rows[intval($line) + $i])[1] . '<br />';
-      }
-    }
-  }
-
+      }          
+    }     
+  } 
+  
   function printProperties($data, $value, $rows, $line){
     $found = explode("(", $data);
-    echo '<u><b>' . $value[0] . '</u></b><br />';
+    echo '<u><b>' . $value[0] . '</u></b><br />';    
     $iterations = intval($found[1][0]) * 23;
     echo 'Subject listed as owning following property<br />';
-    for ($i = 1; $i <= $iterations; $i++) {
+    for ($i = 1; $i <= $iterations; $i++) {   
       if (strpos($rows[intval($line) + $i], 'Mailing Address') !== false){
         echo explode(':', $rows[intval($line) + $i])[1] . '<br />';
       }
       if (strpos($rows[intval($line) + $i], 'APN:') !== false){
         echo 'APN' . explode(':', $rows[intval($line) + $i])[1] . '<br />';
       }
-      if (strpos($rows[intval($line) + $i], 'Mortgage Information') !== false){
+      if (strpos($rows[intval($line) + $i], 'Mortgage Information not available') !== false){
         echo $rows[intval($line) + $i]  . '<br />';
-      }
-    }
-  }
-
+      }      
+      if ($rows[intval($line) + $i] == 'Mortgage'){
+        $iterations = $iterations + 15;
+        echo 'Mortgage'  . '<br />';
+        for ($j = 1; $j <= 11; $j++) {  
+          if ($rows[intval($line) + $i + $j] == 'Mortgage' ){
+            break;
+          }else if(strpos($rows[intval($line) + $i + $j], 'Past Property Deeds') !== false){
+            break 2;
+          }else{
+            echo $rows[intval($line) + $i + $j]  . '<br />';
+          }
+        }
+      }   
+    }     
+  }  
+  
   function printDL($data, $value, $rows, $line){
     echo '<b><u>DL </u></b>';
     for ($i = 1; $i <= 10; $i++) {
@@ -182,9 +243,9 @@ if (isset($_FILES["file"]["tmp_name"])){
       if (strpos($rows[intval($line) + $i], 'Date of Birth') !== false){
         echo 'Date of Birth' . explode(',', explode(':', $rows[intval($line) + $i])[1])[0] . '<br />';
       }
-    }
+    }     
   }
-
+  
 	function printBusinessAffiliation($data, $value, $rows, $line){
     echo '<b><u>Possible Business Affiliations</u></b><br />';
     echo 'Subject reported to be affiliated with<br />';
@@ -193,13 +254,13 @@ if (isset($_FILES["file"]["tmp_name"])){
       if (strpos($rows[intval($line) + $i], 'Link Number') !== false){
         echo explode("(", $rows[intval($line) + $i + 1])[0] . '<br />';
       }
-    }
+    }  
 	}
 
 	function printVehicles($data, $value, $rows, $line){
     $vehicleArray = array();
     $found = explode("(", $data);
-    echo '<u><b>' . $value[0] . '</u></b><br />';
+    echo '<b><u>' . $value[0] . '</u></b><br />';    
     $vehicleLines = 100;
     $iterations = intval($found[1][0]) * $vehicleLines;
     for ($i = 1; $i <= $iterations; $i++) {
@@ -217,7 +278,7 @@ if (isset($_FILES["file"]["tmp_name"])){
         }
         if ($rows[$i + $line] == 'Title Holders'){
           $vehicleArray[5] = $rows[$i + $line + 1];
-        }
+        }      
         if (count($vehicleArray) == 6){
           echo $vehicleArray[0] . ' ' . $vehicleArray[1] . ' Lic. Pt. ';
           echo $vehicleArray[2] . '<br />';
@@ -243,7 +304,7 @@ if (isset($_FILES["file"]["tmp_name"])){
       }else{
         echo $str[0];
       }
-      echo '<br />';
+      echo '<br />';   
     }
 	}
 
@@ -253,7 +314,7 @@ if (isset($_FILES["file"]["tmp_name"])){
       echo '<u><b>' . $value[0] . '</u></b>  ' . substr(trim($found[1]), 0, $value[1]) . '<br />';
     }else{
       echo '<u><b>' . $value[0] . '</u></b>' . $found[1] . '<br />';
-    }
+    }  
 	}
 
 	function printName($rows, $names){
@@ -270,7 +331,7 @@ if (isset($_FILES["file"]["tmp_name"])){
     $map_names = array_map('strlen', $names);
     echo $names[array_search(min($map_names), $map_names)] . " [" . $names[array_search(max($map_names), $map_names)] . "]<br />";
     }
-
+    
     // main function
     printName($rows, $names);
     foreach ($values_map as $key => $value) {
@@ -282,6 +343,7 @@ if (isset($_FILES["file"]["tmp_name"])){
           array_push($no_record, $value[0]);
           }else{
             //checks for flags
+            echo '<br />';
             if (strpos($data,':') !== false && count($value) <= 2){
               printColon($data, $value);
             }elseif($value[1][0] == "m" && strpos($data,'(') !== false){
@@ -291,7 +353,7 @@ if (isset($_FILES["file"]["tmp_name"])){
               $value[2]($data, $value, $rows, $line);
             }else{
               echo $data;
-              echo '<br />';
+              echo '<br />';   
             }
           }
         break;
@@ -300,9 +362,12 @@ if (isset($_FILES["file"]["tmp_name"])){
 	}
   //prints values that did not contain any information
 	$no_record_clean = array_unique($no_record);
-	echo '<b><u> Other areas checked with no records found</b></u><br />';
+	echo '<br /><b><u> Other areas checked with no records found</b></u><br />';
 	foreach ($no_record_clean as $value){
 	echo $value . '<br />';
 	}
 }
 ?>
+</div>
+</body>
+</html>
