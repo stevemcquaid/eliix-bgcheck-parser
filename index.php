@@ -18,9 +18,11 @@
   $(document).ready(function() {
 
 
-  var pdf = new jsPDF('p','pt','a4');
-
-  pdf.addHTML(document.body,function() {
+  var pdf = new jsPDF('p','pt','letter');
+  var options = {
+         pagesplit: true
+    };
+  pdf.addHTML(document.body,options,function() {
     var string = pdf.output('datauristring');
     $('#pdfdownload').attr('href', string);
   });
@@ -43,7 +45,7 @@
     </form>
   </div>
   <div class="col-sm-4">
-    <a href="#" class="btn btn-default"id="pdfdownload">Download PDF</a>
+    <a href="#" class="btn btn-default" id="pdfdownload">Download PDF</a>
   </div>  
 <body>
 
