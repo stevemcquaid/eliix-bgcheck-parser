@@ -286,8 +286,40 @@ Mailing Address: 7006 E A AVE,  KALAMAZOO, MI 49048-9754 (KALAMAZOO COUNTY)
 Absentee Indicator: Owner Occupied
 Universal Land Use: Single Family Residence
 Property Indicator: Single Family Residence
+Mortgage
+Lender: FIFTH THIRD MTG CO
+Mortgage Amount: $188,000
+Mortgage Loan Type: Conventional
+Mortgage Deed Type: Mortgage
+Mortgage Term: 30 Years
+Mortgage Date: 12/14/2009
+Mortgage Due Date: 01/01/2040
+Mtg Sec Cat: CNV, Fixed, Refinance, Conforming
+Refi Flag: Loan to Value is More Than 50%
 
-Mortgage Information not available
+Mortgage
+Lender: HARRIS NA
+Mortgage Amount: $28,500
+Mortgage Interest Rate: 5.0000%
+Mortgage Loan Type: Conventional
+Mortgage Deed Type: Mortgage
+Mortgage Term: 20 Years
+Mortgage Date: 06/02/2008
+Mortgage Due Date: 06/02/2028
+Mtg Sec Cat: CNV, Adjustable, Equity (Closed or Revolving), Conforming
+Mortgage Interest Rate Type: Adjustable
+Equity Flag: Yes
+
+Mortgage
+Lender: HARRIS NA
+Mortgage Amount: $21,000
+Mortgage Interest Rate: 8.2400%
+Mortgage Loan Type: Conventional
+Mortgage Deed Type: Mortgage
+Mortgage Term: 5 Years
+Mortgage Date: 02/21/2008
+Mortgage Due Date: 02/22/2013
+Mtg Sec Cat: CNV, Fixed, Other Subordinate Loans, Conforming
 
 Past Property Deeds (2 Found)
 
